@@ -13,7 +13,7 @@
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		ABA48A650680BB600089EB4F /* DCMJpegImportFilter.h in Headers */ = {isa = PBXBuildFile; fileRef = ABA48A640680BB600089EB4F /* DCMJpegImportFilter.h */; };
 		ABA48A670680BB690089EB4F /* DCMJpegImportFilter.m in Sources */ = {isa = PBXBuildFile; fileRef = ABA48A660680BB690089EB4F /* DCMJpegImportFilter.m */; };
-		CE4DD77E16063186009631FC /* OsiriXAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4DD77D16063186009631FC /* OsiriXAPI.framework */; };
+		CE4DD77E16063186009631FC /* HorosAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE4DD77D16063186009631FC /* HorosAPI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,10 +24,10 @@
 		32DBCF630370AF2F00C91783 /* Duplicate_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Duplicate_Prefix.pch; sourceTree = "<group>"; };
 		8464FB2914AC5A99005E47E1 /* Options.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Options.xib; sourceTree = "<group>"; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AB5D36050680E57E00F4007A /* JPEGtoDICOM.osirixplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JPEGtoDICOM.osirixplugin; sourceTree = BUILT_PRODUCTS_DIR; };
+		AB5D36050680E57E00F4007A /* JPEGtoDICOM.horosplugin */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = JPEGtoDICOM.horosplugin; sourceTree = BUILT_PRODUCTS_DIR; };
 		ABA48A640680BB600089EB4F /* DCMJpegImportFilter.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = DCMJpegImportFilter.h; sourceTree = "<group>"; };
 		ABA48A660680BB690089EB4F /* DCMJpegImportFilter.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = DCMJpegImportFilter.m; sourceTree = "<group>"; };
-		CE4DD77D16063186009631FC /* OsiriXAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OsiriXAPI.framework; sourceTree = "<group>"; };
+		CE4DD77D16063186009631FC /* HorosAPI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HorosAPI.framework; path = ../../Horos/build/Development/HorosAPI.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,7 +36,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */,
-				CE4DD77E16063186009631FC /* OsiriXAPI.framework in Frameworks */,
+				CE4DD77E16063186009631FC /* HorosAPI.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -58,7 +58,7 @@
 		089C1671FE841209C02AAC07 /* Frameworks and Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				CE4DD77D16063186009631FC /* OsiriXAPI.framework */,
+				CE4DD77D16063186009631FC /* HorosAPI.framework */,
 				1058C7ACFEA557BF11CA2CBB /* Linked Frameworks */,
 				1058C7AEFEA557BF11CA2CBB /* Other Frameworks */,
 			);
@@ -104,7 +104,7 @@
 		19C28FB8FE9D52D311CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				AB5D36050680E57E00F4007A /* JPEGtoDICOM.osirixplugin */,
+				AB5D36050680E57E00F4007A /* JPEGtoDICOM.horosplugin */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -149,7 +149,7 @@
 			name = JpegToDICOM;
 			productInstallPath = "$(HOME)/Library/Bundles";
 			productName = Invert;
-			productReference = AB5D36050680E57E00F4007A /* JPEGtoDICOM.osirixplugin */;
+			productReference = AB5D36050680E57E00F4007A /* JPEGtoDICOM.horosplugin */;
 			productType = "com.apple.product-type.bundle";
 		};
 /* End PBXNativeTarget section */
@@ -157,6 +157,9 @@
 /* Begin PBXProject section */
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0730;
+			};
 			buildConfigurationList = BF90E90E088F520B0078E0EC /* Build configuration list for PBXProject "JpegToDicom" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
@@ -224,10 +227,10 @@
 		BF90E90B088F520B0078E0EC /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
 				FRAMEWORK_SEARCH_PATHS = (
-					"\"$(SRCROOT)/../../osirix/osirix/build/Development\"",
+					"\"$(SRCROOT)/../../horos/build/Development\"",
 					"\"$(SRCROOT)\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -256,7 +259,7 @@
 					"-Wno-four-char-constants",
 					"-Wno-unknown-pragmas",
 				);
-				WRAPPER_EXTENSION = osirixplugin;
+				WRAPPER_EXTENSION = horosplugin;
 				ZERO_LINK = NO;
 			};
 			name = Development;
@@ -264,12 +267,11 @@
 		BF90E90F088F520B0078E0EC /* Development */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					x86_64,
-					i386,
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.5;
-				SDKROOT = macosx10.7;
+				ENABLE_TESTABILITY = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				VALID_ARCHS = x86_64;
 			};
 			name = Development;
 		};
