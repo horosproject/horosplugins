@@ -4,7 +4,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "HorosAPI/PluginFilter.h"
+#import <HorosAPI/PluginFilter.h>
 
 @class DCMCalendarDate, DICOMExport;
 
