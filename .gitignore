@@ -97,3 +97,6 @@ Zombies/Zombies.xcodeproj/xcuserdata/bd.xcuserdatad/xcschemes/xcschememanagement
 DiscPublishing.xccheckout
 xcschememanagement.plist
 ExportROIs.xccheckout
+
+DerivedData/
+project.xcworkspace/
