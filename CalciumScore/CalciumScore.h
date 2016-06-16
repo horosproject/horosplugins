@@ -4,7 +4,7 @@
 
 
 #import <Foundation/Foundation.h>
-#import "PluginFilter.h"
+#import <HorosAPI/PluginFilter.h>
 
 @interface CalciumScore : PluginFilter {
 

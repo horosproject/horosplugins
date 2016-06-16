@@ -3,7 +3,7 @@
 //
 
 #import "CalciumScore.h"
-#import "ROI.h"
+#import <HorosAPI/ROI.h>
 
 @implementation CalciumScore
 
