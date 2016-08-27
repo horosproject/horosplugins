@@ -7,7 +7,7 @@
 //
 
 #import "CMIVCLUTOpacityView.h"
-#import "VRView.h"
+#import "OsiriXAPI/VRView.h"
 #import "CMIVVRcontroller.h"
 
 

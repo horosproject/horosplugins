@@ -33,7 +33,7 @@
 #import "CMIVSegmentCore.h"
 #include <Accelerate/Accelerate.h>
 #import "CMIV3DPoint.h"
-#import "browserController.h"
+#import "OsiriXAPI/browserController.h"
 #define TOPOTHERSEEDS 4
 #define BOTTOMOTHERSEEDS 5
 @implementation CMIV_AutoSeeding

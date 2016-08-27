@@ -48,7 +48,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 
 #import <Foundation/Foundation.h>
-#import "PluginFilter.h"
+#import "OsiriXAPI/PluginFilter.h"
 
 
 @interface CMIV_CTA_TOOLS : PluginFilter {

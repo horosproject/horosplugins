@@ -13,7 +13,7 @@ This file is part of CMIV CTA image processing Plugin for OsiriX.
 
 Copyright (c) 2007,
 Center for Medical Image Science and Visualization (CMIV),
-Linköping University, Sweden, http://www.cmiv.liu.se/
+Link√∂ping University, Sweden, http://www.cmiv.liu.se/
 
 CMIV CTA image processing Plugin for OsiriX is free software;
 you can redistribute it and/or modify it under the terms of the
@@ -32,7 +32,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 =========================================================================*/
 #import <Cocoa/Cocoa.h>
-#import "PluginFilter.h"
+#import "OsiriXAPI/PluginFilter.h"
 #import "CMIV_CTA_TOOLS.h"
 #import "CMIVDCMView.h"
 #define id Id
@@ -40,7 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <vtkTransform.h>
 #include <vtkImageReslice.h>
 #undef id
-@interface CMIVChopperController : NSWindowController
+@interface CMIVChopperController : NSWindowController<NSWindowDelegate>
 {
     IBOutlet NSTextField *imageFrom;
     IBOutlet NSSlider *imageFromSlider;

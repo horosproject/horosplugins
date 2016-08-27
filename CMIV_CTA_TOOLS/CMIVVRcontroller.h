@@ -34,9 +34,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 =========================================================================*/
 #import <Cocoa/Cocoa.h>
-#import "PluginFilter.h"
+#import "OsiriXAPI/PluginFilter.h"
 #import "CMIV_CTA_TOOLS.h"
-#import "VRView.h"
+#import "OsiriXAPI/VRView.h"
 #import "CMIVCLUTOpacityView.h"
 #define id Id
 #include <vtkColorTransferFunction.h>
@@ -55,7 +55,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #undef id
 
 
-@interface CMIVVRcontroller : NSWindowController
+@interface CMIVVRcontroller : NSWindowController<NSTableViewDataSource, NSWindowDelegate>
 {
 
 	IBOutlet NSColorWell *colorControl;

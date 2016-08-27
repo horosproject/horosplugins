@@ -29,7 +29,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #import "CMIVScissorsController.h"
 #import "CMIV3DPoint.h"
 #import "CMIVSegmentCore.h"
-#import "QuicktimeExport.h"
+#import "OsiriXAPI/QuicktimeExport.h"
 
 #define id Id
 //#include "itkConnectedThresholdImageFilter.h"
@@ -536,9 +536,9 @@ static		float						deg2rad = 3.14159265358979/180.0;
 	apoint.x=1;
 	apoint.y=1;
 	NSEvent* virtualMouseDownEvent=[NSEvent mouseEventWithType:NSRightMouseDown location:apoint
-										modifierFlags:nil timestamp:GetCurrentEventTime() windowNumber: 0 context:context eventNumber: nil clickCount:1 pressure:nil];
+										modifierFlags:nil timestamp:CVGetCurrentHostTime() windowNumber: 0 context:context eventNumber: nil clickCount:1 pressure:nil];
 	NSEvent* virtualMouseUpEvent = [NSEvent mouseEventWithType:NSRightMouseUp location:apoint
-										  modifierFlags:nil timestamp:GetCurrentEventTime() windowNumber: 0 context:context eventNumber: nil clickCount:1 pressure:nil];
+										  modifierFlags:nil timestamp:CVGetCurrentHostTime() windowNumber: 0 context:context eventNumber: nil clickCount:1 pressure:nil];
 	[originalView mouseDown:virtualMouseDownEvent];
 	[originalView mouseUp:virtualMouseUpEvent];
 	[cPRView mouseDown:virtualMouseDownEvent];
@@ -1069,17 +1069,17 @@ static		float						deg2rad = 3.14159265358979/180.0;
 	
 	axROIOutlineFilter = vtkContourFilter::New();
 	axROIOutlineFilter->SetValue(0, 0);
-	axROIOutlineFilter->SetInput (axLevelSetMapReader->GetOutput());
+	axROIOutlineFilter->SetInputConnection(axLevelSetMapReader->GetOutputPort());
 	
 	axViewPolygonfilter = vtkPolyDataConnectivityFilter::New();
 	axViewPolygonfilter->SetColorRegions( 1);
 	axViewPolygonfilter->SetExtractionModeToLargestRegion();
-	axViewPolygonfilter->SetInput( axROIOutlineFilter->GetOutput());
+	axViewPolygonfilter->SetInputConnection( axROIOutlineFilter->GetOutputPort());
 	
 	axViewPolygonfilter2 = vtkPolyDataConnectivityFilter::New();
 	axViewPolygonfilter2->SetColorRegions( 1);
 	axViewPolygonfilter2->SetExtractionModeToLargestRegion();
-	axViewPolygonfilter2->SetInput( axViewPolygonfilter->GetOutput());
+	axViewPolygonfilter2->SetInputConnection( axViewPolygonfilter->GetOutputPort());
 	
 	
 	oViewBasicTransform = vtkTransform::New();
@@ -1131,7 +1131,7 @@ static		float						deg2rad = 3.14159265358979/180.0;
 	oViewSlice = vtkImageReslice::New();
 	oViewSlice->SetAutoCropOutput( true);
 	oViewSlice->SetInformationInput( reader->GetOutput());
-	oViewSlice->SetInput( reader->GetOutput());
+	oViewSlice->SetInputConnection( reader->GetOutputPort());
 	oViewSlice->SetOptimization( true);
 	oViewSlice->SetResliceTransform( oViewUserTransform);
 	oViewSlice->SetResliceAxesOrigin( 0, 0, 0);
@@ -1142,7 +1142,7 @@ static		float						deg2rad = 3.14159265358979/180.0;
 	oViewROISlice= vtkImageReslice::New();
 	oViewROISlice->SetAutoCropOutput( true);
 	oViewROISlice->SetInformationInput( roiReader->GetOutput());
-	oViewROISlice->SetInput( roiReader->GetOutput());
+	oViewROISlice->SetInputConnection( roiReader->GetOutputPort());
 	oViewROISlice->SetOptimization( true);
 	oViewROISlice->SetResliceTransform(oViewUserTransform );
 	oViewROISlice->SetResliceAxesOrigin( 0, 0, 0);
@@ -1154,9 +1154,9 @@ static		float						deg2rad = 3.14159265358979/180.0;
 	vtkImageData	*tempIm;
 	int				imExtent[ 6];
 	double		space[ 3], origin[ 3];
+    oViewSlice->Update();
 	tempIm = oViewSlice->GetOutput();
-	tempIm->Update();
-	tempIm->GetWholeExtent( imExtent);
+	tempIm->GetExtent( imExtent);
 	tempIm->GetSpacing( oViewSpace);
 	tempIm->GetOrigin( oViewOrigin);
 	tempIm->GetSpacing( space);
@@ -1207,7 +1207,7 @@ static		float						deg2rad = 3.14159265358979/180.0;
 	cViewSlice = vtkImageReslice::New();
 	cViewSlice->SetAutoCropOutput( true);
 	cViewSlice->SetInformationInput( reader->GetOutput());
-	cViewSlice->SetInput( reader->GetOutput());
+	cViewSlice->SetInputConnection( reader->GetOutputPort());
 	cViewSlice->SetOptimization( true);
 	cViewSlice->SetResliceTransform( cViewTransform);
 	cViewSlice->SetResliceAxesOrigin( 0, 0, 0);
@@ -1217,9 +1217,9 @@ static		float						deg2rad = 3.14159265358979/180.0;
 	
 	maxWidthofCPR=40;//used by straighten CPR
 	
+    cViewSlice->Update();
 	tempIm = cViewSlice->GetOutput();
-	tempIm->Update();
-	tempIm->GetWholeExtent( imExtent);
+	tempIm->GetExtent( imExtent);
 	tempIm->GetSpacing( space);
 	tempIm->GetOrigin( origin);	
 	tempIm->GetSpacing( cViewSpace);
@@ -1267,7 +1267,7 @@ static		float						deg2rad = 3.14159265358979/180.0;
 	axViewSlice = vtkImageReslice::New();
 	axViewSlice->SetAutoCropOutput( true);
 	axViewSlice->SetInformationInput( reader->GetOutput());
-	axViewSlice->SetInput( reader->GetOutput());
+	axViewSlice->SetInputConnection( reader->GetOutputPort());
 	axViewSlice->SetOptimization( true);
 	axViewSlice->SetResliceTransform( axViewTransform);
 	axViewSlice->SetResliceAxesOrigin( 0, 0, 0);
@@ -1276,10 +1276,9 @@ static		float						deg2rad = 3.14159265358979/180.0;
 	//axViewSlice->SetOutputSpacing(1,1,0);
 	axViewSlice->SetBackgroundLevel( -1024);
 	
-	
+    axViewSlice->Update();
 	tempIm = axViewSlice->GetOutput();
-	tempIm->Update();
-	tempIm->GetWholeExtent( imExtent);
+	tempIm->GetExtent( imExtent);
 	tempIm->GetSpacing( axViewSpace);
 	tempIm->GetOrigin( axViewOrigin);
 	tempIm->GetSpacing( space);
@@ -1290,7 +1289,7 @@ static		float						deg2rad = 3.14159265358979/180.0;
 		axViewROISlice= vtkImageReslice::New();
 		axViewROISlice->SetAutoCropOutput( true);
 		axViewROISlice->SetInformationInput( axROIReader->GetOutput());
-		axViewROISlice->SetInput( axROIReader->GetOutput());
+		axViewROISlice->SetInputConnection( axROIReader->GetOutputPort());
 		axViewROISlice->SetOptimization( true);
 		axViewROISlice->SetResliceTransform( axViewTransform);
 		axViewROISlice->SetResliceAxesOrigin( 0, 0, 0);
@@ -1397,9 +1396,9 @@ static		float						deg2rad = 3.14159265358979/180.0;
 		oViewSlice->SetInterpolationModeToCubic();
 	else
 		oViewSlice->SetInterpolationModeToNearestNeighbor();
+    oViewSlice->Update();
 	tempIm = oViewSlice->GetOutput();
-	tempIm->Update();
-	tempIm->GetWholeExtent( imExtent);
+	tempIm->GetExtent( imExtent);
 	tempIm->GetSpacing( oViewSpace);
 	tempIm->GetOrigin( oViewOrigin);	
 	
@@ -1428,9 +1427,9 @@ static		float						deg2rad = 3.14159265358979/180.0;
 	{
 		if(contrastVolumeData)
 		{
+            oViewROISlice->Update();
 			tempROIIm = oViewROISlice->GetOutput();
-			tempROIIm->Update();
-			tempROIIm->GetWholeExtent( imExtent);
+			tempROIIm->GetExtent( imExtent);
 			tempROIIm->GetSpacing( oViewSpace);
 			tempROIIm->GetOrigin( oViewOrigin);	
 			short unsigned int *imROI = (short unsigned int*) tempROIIm->GetScalarPointer();
@@ -1616,9 +1615,9 @@ static		float						deg2rad = 3.14159265358979/180.0;
 		axViewSlice->SetInterpolationModeToCubic();
 	else
 		axViewSlice->SetInterpolationModeToNearestNeighbor();
+    axViewSlice->Update();
 	tempIm = axViewSlice->GetOutput();
-	tempIm->Update();
-	tempIm->GetWholeExtent( imExtent);
+	tempIm->GetExtent( imExtent);
 	tempIm->GetSpacing( axViewSpace);
 	tempIm->GetOrigin( axViewOrigin);	
 	
@@ -1672,9 +1671,9 @@ static		float						deg2rad = 3.14159265358979/180.0;
 			axViewROISlice->SetInterpolationModeToNearestNeighbor();
 		int				axROIExtent[ 6];
 		double axROISpacing[3],axROIOrigin[3];
+        axViewROISlice->Update();
 		tempROIIm = axViewROISlice->GetOutput();
-		tempROIIm->Update();
-		tempROIIm->GetWholeExtent( axROIExtent);
+		tempROIIm->GetExtent( axROIExtent);
 		tempROIIm->GetSpacing( axROISpacing);
 		tempROIIm->GetOrigin( axROIOrigin);	
 		float *imAxROI = (float*) tempROIIm->GetScalarPointer();
@@ -2463,9 +2462,9 @@ static		float						deg2rad = 3.14159265358979/180.0;
 				vtkImageData	*tempIm;
 				int				imExtent[ 6];
 				double		space[ 3], origin[ 3];
+                oViewSlice->Update();
 				tempIm = oViewSlice->GetOutput();
-				tempIm->Update();
-				tempIm->GetWholeExtent( imExtent);
+				tempIm->GetExtent( imExtent);
 				tempIm->GetSpacing( space);
 				tempIm->GetOrigin( origin);	
 				
@@ -2534,9 +2533,9 @@ static		float						deg2rad = 3.14159265358979/180.0;
 				vtkImageData	*tempIm;
 				int				imExtent[ 6];
 				double		space[ 3], origin[ 3];
+                cViewSlice->Update();
 				tempIm = cViewSlice->GetOutput();
-				tempIm->Update();
-				tempIm->GetWholeExtent( imExtent);
+				tempIm->GetExtent( imExtent);
 				tempIm->GetSpacing( space);
 				tempIm->GetOrigin( origin);	
 				
@@ -2604,9 +2603,9 @@ static		float						deg2rad = 3.14159265358979/180.0;
 				vtkImageData	*tempIm;
 				int				imExtent[ 6];
 				double		space[ 3], origin[ 3];
+                axViewSlice->Update();
 				tempIm = axViewSlice->GetOutput();
-				tempIm->Update();
-				tempIm->GetWholeExtent( imExtent);
+				tempIm->GetExtent( imExtent);
 				tempIm->GetSpacing( space);
 				tempIm->GetOrigin( origin);	
 				
@@ -3640,9 +3639,9 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		cViewSlice->SetInterpolationModeToCubic();
 	else
 		cViewSlice->SetInterpolationModeToNearestNeighbor();
+    cViewSlice->Update();
 	tempIm = cViewSlice->GetOutput();
-	tempIm->Update();
-	tempIm->GetWholeExtent( imExtent);
+	tempIm->GetExtent( imExtent);
 	tempIm->GetSpacing( cViewSpace);
 	tempIm->GetOrigin( cViewOrigin);	
 	
@@ -9128,8 +9127,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 	axLevelSetMapReader->SetDataSpacing(1.0,1.0,0);
 	axLevelSetMapReader->SetDataExtentToWholeExtent();
 	axLevelSetMapReader->SetDataScalarTypeToFloat();
+    axViewPolygonfilter2->Update();
 	vtkPolyData *output = axViewPolygonfilter2->GetOutput();//axROIOutlineFilter->GetOutput();
-	output->Update();
 	int pointnumber;
 	pointnumber=output->GetNumberOfPoints();
 	if(pointnumber<3)

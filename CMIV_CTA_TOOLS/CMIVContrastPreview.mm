@@ -31,7 +31,7 @@
 #import "CMIV3DPoint.h"
 #import "CMIV_AutoSeeding.h"
 #import "CMIVSegmentCore.h"
-#import "QuicktimeExport.h"
+#import "OsiriXAPI/QuicktimeExport.h"
 @implementation CMIVContrastPreview
 
 - (IBAction)chooseASeed:(id)sender
@@ -177,10 +177,9 @@
 	else
 		mprViewSlice->SetInterpolationModeToNearestNeighbor();
 	
-	
+    mprViewSlice->Update();
 	tempIm = mprViewSlice->GetOutput();
-	tempIm->Update();
-	tempIm->GetWholeExtent( imExtent);
+	tempIm->GetExtent( imExtent);
 	tempIm->GetSpacing( mprViewSpace);
 	tempIm->GetOrigin( mprViewOrigin);	
 	
@@ -192,9 +191,9 @@
 	double	 space[3], origin[3];
 	if(newSeedsBuffer)
 	{
+        mprViewROISlice->Update();
 		tempROIIm = mprViewROISlice->GetOutput();
-		tempROIIm->Update();
-		tempROIIm->GetWholeExtent( imExtent);
+		tempROIIm->GetExtent( imExtent);
 		tempROIIm->GetSpacing( space);
 		tempROIIm->GetOrigin( origin);	
 		
@@ -648,9 +647,9 @@
 	apoint.x=1;
 	apoint.y=1;
 	NSEvent* virtualMouseDownEvent=[NSEvent mouseEventWithType:NSRightMouseDown location:apoint
-												 modifierFlags:nil timestamp:GetCurrentEventTime() windowNumber: 0 context:context eventNumber: nil clickCount:1 pressure:nil];
+												 modifierFlags:nil timestamp:CVGetCurrentHostTime() windowNumber: 0 context:context eventNumber: nil clickCount:1 pressure:nil];
 	NSEvent* virtualMouseUpEvent = [NSEvent mouseEventWithType:NSRightMouseUp location:apoint
-												 modifierFlags:nil timestamp:GetCurrentEventTime() windowNumber: 0 context:context eventNumber: nil clickCount:1 pressure:nil];
+												 modifierFlags:nil timestamp:CVGetCurrentHostTime() windowNumber: 0 context:context eventNumber: nil clickCount:1 pressure:nil];
 	[mprView mouseDown:virtualMouseDownEvent];
 	[mprView mouseUp:virtualMouseUpEvent];
 	//mistery bug above
@@ -747,7 +746,7 @@
 	mprViewSlice = vtkImageReslice::New();
 	mprViewSlice->SetAutoCropOutput( true);
 	mprViewSlice->SetInformationInput( reader->GetOutput());
-	mprViewSlice->SetInput( reader->GetOutput());
+	mprViewSlice->SetInputConnection( reader->GetOutputPort());
 	mprViewSlice->SetOptimization( true);
 	mprViewSlice->SetResliceTransform( mprViewUserTransform);
 	mprViewSlice->SetResliceAxesOrigin( 0, 0, 0);
@@ -758,7 +757,7 @@
 	mprViewROISlice= vtkImageReslice::New();
 	mprViewROISlice->SetAutoCropOutput( true);
 	mprViewROISlice->SetInformationInput( roiReader->GetOutput());
-	mprViewROISlice->SetInput( roiReader->GetOutput());
+	mprViewROISlice->SetInputConnection( roiReader->GetOutputPort());
 	mprViewROISlice->SetOptimization( true);
 	mprViewROISlice->SetResliceTransform( mprViewUserTransform);
 	mprViewROISlice->SetResliceAxesOrigin( 0, 0, 0);
@@ -769,9 +768,9 @@
 	vtkImageData	*tempIm;
 	int				imExtent[ 6];
 	double		space[ 3], origin[ 3];
+    mprViewSlice->Update();
 	tempIm = mprViewSlice->GetOutput();
-	tempIm->Update();
-	tempIm->GetWholeExtent( imExtent);
+	tempIm->GetExtent( imExtent);
 	tempIm->GetSpacing( space);
 	tempIm->GetOrigin( origin);	
 	float iwl, iww;
@@ -1545,8 +1544,8 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		float oX,oY;
 		vtkImageData	*tempIm;
 		double		space[ 3], origin[ 3];
+        mprViewSlice->Update();
 		tempIm = mprViewSlice->GetOutput();
-		tempIm->Update();
 		tempIm->GetSpacing( space);
 		tempIm->GetOrigin( origin);	
 		

@@ -18,8 +18,8 @@ PURPOSE.
 =========================================================================*/
 
 #import "CMIVExport.h"
-#import "BrowserController.h"
-#import "SRAnnotation.h"
+#import "OsiriXAPI/BrowserController.h"
+#import "OsiriXAPI/SRAnnotation.h"
 
 #define VERBOSEMODE
 

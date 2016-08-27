@@ -33,7 +33,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
-#import "PluginFilter.h"
+#import "OsiriXAPI/PluginFilter.h"
 #import "CMIV_CTA_TOOLS.h"
 @interface CMIVSaveResult : NSObject
 {

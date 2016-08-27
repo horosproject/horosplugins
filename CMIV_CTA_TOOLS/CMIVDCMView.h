@@ -7,8 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "DCMPix.h"	
-#import "DCMView.h"	
+#import "OsiriXAPI/DCMPix.h"
+#import "OsiriXAPI/DCMView.h"	
 
 @interface CMIVDCMView : DCMView {
 	NSSlider* tranlateSlider;
