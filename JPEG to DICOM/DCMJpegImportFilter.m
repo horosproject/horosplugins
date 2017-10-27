@@ -70,8 +70,10 @@
         [openPanel setTitle:NSLocalizedString( @"Import", nil)];
         [openPanel setMessage:NSLocalizedString( @"Select image or folder of images to convert to DICOM", nil)];
         
-        if( supportCustomMetaData)
+        if( supportCustomMetaData) {
             [openPanel setAccessoryView: accessoryView];
+            [openPanel setAccessoryViewDisclosed:YES];
+        }
         
         if( [openPanel runModalForTypes:[NSImage imageFileTypes]] == NSOKButton)
         {
