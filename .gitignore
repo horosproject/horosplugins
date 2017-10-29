@@ -3,3 +3,4 @@ DerivedData
 *.xcworkspace
 *.xcuserdatad
 
+.DS_Store
