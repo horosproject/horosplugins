@@ -2226,7 +2226,7 @@ else
 	vtkImageReslice *imageSlice = vtkImageReslice::New();
 	imageSlice->SetAutoCropOutput( true);
 	imageSlice->SetInformationInput( reader->GetOutput());
-	imageSlice->SetInput( reader->GetOutput());
+	imageSlice->SetInputConnection( reader->GetOutputPort());
 	imageSlice->SetOptimization( true);
 	imageSlice->SetResliceTransform( rotationTransform);
 	imageSlice->SetResliceAxesOrigin( 0, 0, 0);
@@ -2239,9 +2239,9 @@ else
 	vtkImageData	*tempIm;
 	int	imSliceExtent[ 6];
 	double imSliceSpacing[3],imSliceOrigin[3];
+    imageSlice->Update();
 	tempIm = imageSlice->GetOutput();
-	tempIm->Update();
-	tempIm->GetWholeExtent( imSliceExtent);
+	tempIm->GetExtent( imSliceExtent);
 	tempIm->GetSpacing( imSliceSpacing);
 	tempIm->GetOrigin( imSliceOrigin);
 
@@ -2375,9 +2375,9 @@ else
 	int costMapOrigin[2];
 	do {
 		//get cross-section image
+        imageSlice->Update();
 		tempIm = imageSlice->GetOutput();
-		tempIm->Update();
-		tempIm->GetWholeExtent( imSliceExtent);
+		tempIm->GetExtent( imSliceExtent);
 		tempIm->GetSpacing( imSliceSpacing);
 		tempIm->GetOrigin( imSliceOrigin);
 		float *im = (float*) tempIm->GetScalarPointer();
@@ -2630,9 +2630,9 @@ else
 			translateTransform->Identity();
 			rotationTransform->Identity();
 			translateTransform->SetMatrix(lastVTKTransformMatrix);
+            imageSlice->Update();
 			tempIm = imageSlice->GetOutput();
-			tempIm->Update();
-			tempIm->GetWholeExtent( imSliceExtent);
+			tempIm->GetExtent( imSliceExtent);
 			tempIm->GetSpacing( imSliceSpacing);
 			tempIm->GetOrigin( imSliceOrigin);
 			segmentedRegion=lastSegmentedRegion;

@@ -693,7 +693,7 @@
 	rotate = vtkImageReslice::New();
 	rotate->SetAutoCropOutput( true);
 	rotate->SetInformationInput( reader->GetOutput());
-	rotate->SetInput( reader->GetOutput());
+	rotate->SetInputData(reader->GetOutput());
 	rotate->SetOptimization( true);
 	rotate->SetResliceTransform( sliceTransform);
 	rotate->SetResliceAxesOrigin( 0, 0, 0);
@@ -710,9 +710,9 @@
 	vtkImageData	*tempIm;
 	int				imExtent[ 6];
 	double		space[ 3], origin[ 3];
+    rotate->Update();
 	tempIm = rotate->GetOutput();
-	tempIm->Update();
-	tempIm->GetWholeExtent( imExtent);
+	tempIm->GetExtent( imExtent);
 	tempIm->GetSpacing( space);
 	tempIm->GetOrigin( origin);	
 	
@@ -807,9 +807,9 @@
 	vtkImageData	*tempIm;
 	int				imExtent[ 6];
 	double		space[ 3], origin[ 3];
+    rotate->Update();
 	tempIm = rotate->GetOutput();
-	tempIm->Update();
-	tempIm->GetWholeExtent( imExtent);
+	tempIm->GetExtent( imExtent);
 	tempIm->GetSpacing( space);
 	tempIm->GetOrigin( origin);	
 	

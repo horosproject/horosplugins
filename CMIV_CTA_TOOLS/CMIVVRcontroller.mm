@@ -27,11 +27,11 @@
  
  =========================================================================*/
 #import "CMIVVRcontroller.h"
-#import "QuicktimeExport.h"
-#import "DICOMExport.h"
+#import "OsiriXAPI/QuicktimeExport.h"
+#import "OsiriXAPI/DICOMExport.h"
 #include "VRMakeObject.h"
 #import <QTKit/QTKit.h>
-#import "OsiriX Headers/BrowserController.h"
+#import "OsiriXAPI/BrowserController.h"
 
 
 static void needAdjustClipPlane(vtkObject*,unsigned long c, void* ptr, void*)
@@ -1724,7 +1724,7 @@ objectValueForTableColumn:(NSTableColumn *)tableColumn
 		myMapper=vtkVolumeRayCastMapper::New();
 		myCompositionFunction=vtkVolumeRayCastCompositeFunction::New();
 		myCompositionFunction->SetCompositeMethodToClassifyFirst();
-		myMapper->SetInput(volumeImageData);
+		myMapper->SetInputData(volumeImageData);
 		myMapper->SetVolumeRayCastFunction(myCompositionFunction);
 		
 		

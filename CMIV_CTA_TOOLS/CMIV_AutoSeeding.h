@@ -32,7 +32,7 @@
  =========================================================================*/
 
 #import <Cocoa/Cocoa.h>
-#import "PluginFilter.h"
+#import "OsiriXAPI/PluginFilter.h"
 #import "CMIV_CTA_TOOLS.h"
 
 @interface CMIV_AutoSeeding : NSObject {
