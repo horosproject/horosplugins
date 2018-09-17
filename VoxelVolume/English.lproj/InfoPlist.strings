@@ -1,0 +1,6 @@
+/* Localized versions of Info.plist keys */
+
+CFBundleName = "VoxelVolume";
+CFBundleShortVersionString = "1.0";
+CFBundleGetInfoString = "VoxelVolume version 1.0, Copyright (c) 2016 soren.";
+NSHumanReadableCopyright = "Copyright (c) 2016 soren.";
