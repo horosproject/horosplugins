@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'VoxelVolume' target in the 'VoxelVolume' project.
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <AppKit/AppKit.h>
+#endif
